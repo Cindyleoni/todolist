@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
-import React from 'react'
+import "./App.css";
+import * as React from "react";
+import { ChakraProvider, Input } from "@chakra-ui/react";
+import { TodoItem } from "./todoitem";
+
+function InputForm({setTodo }) {
+  const input = React.useRef("");
+  function handleSubmit(event) {
+    event.preventDefault();
+    setTodo((currentValue) => [...currentValue, {value: input.current.value, checked: false}]);
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div className="container">
+        <Input ref={input}></Input> <br></br>
+      </div>
+    </form>
+  );
+}
+
+function Container() {
+  const [todo, setTodo] = React.useState(() => {
+    const localItem = window.localStorage.getItem("todo");
+    return localItem !== null ? JSON.parse(localItem) : []
+  });
+
+  return (
+    <div>
+      <InputForm todo={todo} setTodo={setTodo} />
+      <TodoItem todo={todo} />
+    </div>
+  );
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ChakraProvider>
+      <Container />
+    </ChakraProvider>
   );
 }
 
