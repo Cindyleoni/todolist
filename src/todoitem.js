@@ -1,29 +1,51 @@
-import * as React from 'react'
-import {Checkbox, UnorderedList, ListItem} from '@chakra-ui/react';
+import * as React from "react";
+import {
+  Checkbox,
+  UnorderedList,
+  ListItem,
+  Button,
+  Grid,
+  GridItem,
+} from "@chakra-ui/react";
 
-function TodoItem({todo, onChecked}){
-    function  renderList() {
-        return todo.map((item) => {
-            console.log(item.value, item.checked)
-            return (
-                <ListItem key={item.value}>
-                    <Checkbox defaultChecked={item.checked} onChange={() => {onChecked(item.value)}}>{item.value}</Checkbox>
-                </ListItem>
-            )
-        })
-    }
-  
-    React.useEffect(() => {  
-      window.localStorage.setItem('todo', JSON.stringify(todo))
-      }, [todo])
-  
-    return (
-      <div>
-          <UnorderedList styleType={'none'}>
-            {renderList()}
-          </UnorderedList>
-      </div>
-    )
+function TodoItem({ todo, onChecked, onDelete }) {
+  function renderList() {
+    return todo.map((item) => {
+      return (
+        <ListItem key={item.value}>
+          <Grid templateColumns="repeat(2, 1fr)">
+            <GridItem colSpan={2}>
+              <Checkbox
+                defaultChecked={item.checked}
+                onChange={() => {
+                  onChecked(item.value);
+                }}
+              >
+                {item.value}
+              </Checkbox>
+            </GridItem>
+            <GridItem colStart={3} colEnd={3}>
+              <Button
+                size="xs"
+                variant="ghost"
+                onClick={() => {
+                  onDelete(item.value);
+                }}
+              >
+                X
+              </Button>
+            </GridItem>
+          </Grid>
+        </ListItem>
+      );
+    });
   }
 
-  export {TodoItem}
+  return (
+    <div>
+      <UnorderedList styleType={"none"}>{renderList()}</UnorderedList>
+    </div>
+  );
+}
+
+export { TodoItem };
