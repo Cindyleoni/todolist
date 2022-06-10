@@ -1,6 +1,6 @@
 import * as React from "react";
-import { TodoItem } from "./todoItem";
-import { InputForm } from "./inputForm";
+import { TodoItem } from "./TodoItem";
+import { InputForm } from "./InputForm";
 
 function MainContainer() {
   const [todo, setTodo] = React.useState(() => {
