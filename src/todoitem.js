@@ -12,13 +12,13 @@ function TodoItem({ todo, onChecked, onDelete }) {
   function renderList() {
     return todo.map((item) => {
       return (
-        <ListItem key={item.value}>
+        <ListItem key={item.id}>
           <Grid templateColumns="repeat(2, 1fr)">
             <GridItem colSpan={2}>
               <Checkbox
                 defaultChecked={item.checked}
                 onChange={() => {
-                  onChecked(item.value);
+                  onChecked(item.id);
                 }}
               >
                 {item.value}
@@ -29,7 +29,7 @@ function TodoItem({ todo, onChecked, onDelete }) {
                 size="xs"
                 variant="ghost"
                 onClick={() => {
-                  onDelete(item.value);
+                  onDelete(item.id);
                 }}
               >
                 X
